@@ -29,11 +29,13 @@ class Oracle:
 class OracleRev(Oracle):
     # Reversible, (non-quantum), 2 bit in 2 bit out version, using y input value for constant fns.
     # Assumes y = 0 by default, (although it doesn't have to be).
+    # x = IN
+    # y = OUT
     FNS = [
             lambda x, y: (x, y),
             lambda x, y: (x, 1 - y),
-            lambda x, y: (x, x),
-            lambda x, y: (x, 1 - x)
+            lambda x, y: (x, x ^ y),
+            lambda x, y: (x, 1 - (x ^ y))
     ]
 
     def f(self, b, r=0):
@@ -45,8 +47,8 @@ class Oracle2F(OracleRev):
     FNS = [
             lambda x, y: (x, 0),  # hardcoded 0 loses info about y
             lambda x, y: (x, 1),  # hardcoded 1 loses info about y
-            lambda x, y: (x, x),
-            lambda x, y: (x, 1 - x)
+            lambda x, y: (x, x ^ y),
+            lambda x, y: (x, 1 - (x ^ y))
     ]
 
 
